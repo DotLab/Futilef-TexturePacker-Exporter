@@ -1,11 +1,3 @@
-var Vector2 = function (x, y) {
-	return { x: x, y: y };
-};
-
-var Rect = function (left, right, top, bottom) {
-	return { left: left, right: right, top: top, bottom: bottom };
-};
-
 var jsonExport = function(tp) {
 	var texture = tp.texture;
 	var res = {};
@@ -23,36 +15,29 @@ var jsonExport = function(tp) {
 				x: Math.round(sprite.pivotPoint.x + sprite.centerOffset.x),
 				y: Math.round(sprite.untrimmedSize.height - sprite.pivotPoint.y + sprite.centerOffset.y),
 			},
-			// pivot: { x: sprite.pivotPoint.x, y: sprite.pivotPoint.x },
-			// center: { x: sprite.centerOffset.x, y: sprite.centerOffset.y },
-		};
 
-		frame.quad = {
-			left: sprite.sourceRect.x,
-			right: sprite.sourceRect.x + sprite.sourceRect.width,
-			top: sprite.untrimmedSize.height - (sprite.sourceRect.y),
-			bottom: sprite.untrimmedSize.height - (sprite.sourceRect.y + sprite.sourceRect.height),
-		};
+			quad: {
+				x: sprite.sourceRect.x,
+				y: sprite.sourceRect.y,
+				w: sprite.sourceRect.width,
+				h: sprite.sourceRect.height,
+			},
 
-		frame.quad.left -= frame.pivot.x;
-		frame.quad.right -= frame.pivot.x;
-		frame.quad.top -= frame.pivot.y;
-		frame.quad.bottom -= frame.pivot.y;
+			rotated: sprite.rotated,
+			uv: {
+				x: sprite.frameRect.x,
+				y: sprite.frameRect.y,
+				w: sprite.frameRect.width,
+				h: sprite.frameRect.height,
+			},
 
-		frame.rotated = sprite.rotated;
-		frame.uv = {
-			left: sprite.frameRect.x,
-			right: (sprite.frameRect.x + sprite.frameRect.width),
-			top: texture.size.height - sprite.frameRect.y,
-			bottom: texture.size.height - (sprite.frameRect.y + sprite.frameRect.height),
-		};
-
-		frame.sliced = sprite.scale9Enabled;
-		frame.border = {
-			left: sprite.scale9Borders.x,
-			right: sprite.untrimmedSize.width - (sprite.scale9Borders.x + sprite.scale9Borders.width),
-			top: sprite.scale9Borders.y,
-			bottom: sprite.untrimmedSize.height - (sprite.scale9Borders.y + sprite.scale9Borders.height),
+			sliced: sprite.scale9Enabled,
+			border: {
+				x: sprite.scale9Borders.x,
+				y: sprite.scale9Borders.y,
+				w: sprite.scale9Borders.width,
+				h: sprite.scale9Borders.height,
+			},
 		};
 
 		frames.push(frame);
