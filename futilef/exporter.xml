@@ -145,15 +145,15 @@
          You can define them with an optinal <variantPresets> block as shown here: -->
     <variantPresets>
         <variantPreset>
-            <name>HD / SD</name>
+            <name>One / Half</name>
             <variant>
                 <scale>1.0</scale>
-                <extension>hd</extension>
+                <extension></extension>
                 <filter></filter>    <!-- optional -->
             </variant>
             <variant>
                 <scale>0.5</scale>
-                <extension>sd</extension>
+                <extension>-half</extension>
                 <filter></filter>
             </variant>
             <forceIdenticalLayout>false</forceIdenticalLayout>
