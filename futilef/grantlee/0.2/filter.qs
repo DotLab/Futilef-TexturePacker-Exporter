@@ -46,30 +46,34 @@ var jsonExport = function(tp) {
 		if (typeof(x) === 'string') return parseInt(x.replace(/[^0-9]/g, ''));
 	})
 	
-	// var bytes = ints.reduce(function(acc, cur) {
-	// 	if (typeof(cur) === 'number') {
-	// 		acc.push(cur       & 0xff);
-	// 		acc.push(cur >> 8  & 0xff);
-	// 		acc.push(cur >> 16 & 0xff);
-	// 		acc.push(cur >> 24 & 0xff);
-	// 	}
-	// 	return acc;
-	// }, []);
+	if (tp.exporterProperties.base64) {
+		var bytes = ints.reduce(function(acc, cur) {
+			if (typeof(cur) === 'number') {
+				acc.push(cur       & 0xff);
+				acc.push(cur >> 8  & 0xff);
+				acc.push(cur >> 16 & 0xff);
+				acc.push(cur >> 24 & 0xff);
+			}
+			return acc;
+		}, []);
+	
+		var str = '';
+		for (var i = 0, len = bytes.length; i < len; i += 3) {
+			var b1 = bytes[i];
+			var b2 = i + 1 < len ? bytes[i + 1] : 0;
+			var b3 = i + 2 < len ? bytes[i + 2] : 0;
+			var a1 = b1 >> 2 & 63;
+			var a2 = ((b1 & 3) << 4 | (b2 >> 4 & 15)) & 63;
+			var a3 = ((b2 & 15) << 2 | (b3 >> 6 & 3)) & 63;
+			var a4 = b3 & 63;
+			str += base64[a1];
+			str += base64[a2];
+			if (i + 1 < len) str += base64[a3];
+			if (i + 2 < len) str += base64[a4];
+		}
 
-	// var str = '';
-	// for (var i = 0, len = bytes.length; i < len; i += 3) {
-	// 	var b1 = bytes[i];
-	// 	var b2 = i + 1 < len ? bytes[i + 1] : 0;
-	// 	var b3 = i + 2 < len ? bytes[i + 2] : 0;
-	// 	var a1 = b1 >> 2 & 63;
-	// 	var a2 = ((b1 & 3) << 4 | (b2 >> 4 & 15)) & 63;
-	// 	var a3 = ((b2 & 15) << 2 | (b3 >> 6 & 3)) & 63;
-	// 	var a4 = b3 & 63;
-	// 	str += base64[a1];
-	// 	str += base64[a2];
-	// 	if (i + 1 < len) str += base64[a3];
-	// 	if (i + 2 < len) str += base64[a4];
-	// }
+		return str;
+	}
 
 	return ints.join(',');
 };

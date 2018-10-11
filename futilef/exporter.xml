@@ -139,7 +139,6 @@
         <defaultPivotPoint>0.5,0.5</defaultPivotPoint>
     </defaults>
 
-
     <!-- TexturePacker's "scaling variants" dialog provides a set of presets.
          These presets can be overwritten by exporter-specific ones.
          You can define them with an optinal <variantPresets> block as shown here: -->
@@ -159,4 +158,26 @@
             <forceIdenticalLayout>false</forceIdenticalLayout>
         </variantPreset>
     </variantPresets>
+
+    <!-- The following <properties> block shows how to define custom exporter properties.
+        For each property TexturePacker displays an input field in the UI.
+        The values entered there are stored in the TPS file and passed to the
+        exporter when publishing. There they can be used in the template file. -->
+    <properties>
+        <property>
+            <!-- Property name, used in tps file + exporter template: -->
+            <name>base64</name>
+            <!-- Property type, supported values: string, bool -->
+            <type>bool</type>
+            <!-- Default value for new projects -->
+            <default>false</default>
+            <!-- Name and tooltip text used for the input field in the UI: -->
+            <displayName>Base64 Encoding</displayName>
+            <toolTip>Encode to Base64 string?</toolTip>
+            <!-- Only displayed if advanced settings are expanded (small triangle
+                 in front of Data settings) -->
+            <isAdvanced>true</isAdvanced>
+        </property>
+        <!-- more <property>s can be defined here -->
+    </properties>
 </exporter>
